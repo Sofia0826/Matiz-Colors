@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+main {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 350px;
+  margin: 50px auto;
+  margin-top: 100px;
+}
+
+h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1.4rem;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: rgb(234, 0, 255);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 1.6rem;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: rgb(126, 1, 137);
+}
+
+p {
+  font-size: 1.4rem;
+  margin-top: 10px;
+}
+
+a {
+  color: #ff0077;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.messages {
+  margin-bottom: 10px;
+}
+
+.messages p {
+  background-color: #f8d7da;
+  color: #a0024c;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 1.4rem;
+}
+
+
+
+

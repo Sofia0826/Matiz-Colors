@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Conocenos{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'conocenos.css' %}">
+
+<div class="main-container">
+  <div class="box mission-box">
+    <div class="text-content">
+      <h2>MISIÓN</h2>
+      <p>Empoderamos a mujeres y niñas mediante la creación de prendas únicas, confeccionadas a mano con amor y dedicación. Cada diseño refleja creatividad, color y mensajes inspiradores que impulsan la confianza, autenticidad y el cumplimiento de sueños.</p>
+    </div>
+    <img src="{% static 'img/v 1.jpg' %}" alt="Misión">
+  </div>
+
+  <div class="box vision-box">
+    <img src="{% static 'img/v 3.jpg' %}" alt="Visión">
+    <div class="text-content">
+      <h2>VISIÓN</h2>
+      <p>En Matiz Color’s aspiramos a ser una marca referente en moda artesanal, destacándonos por nuestra calidad, creatividad y compromiso social. Desde Guadalupe - Huila, trabajamos con un equipo de mujeres talentosas, promoviendo oportunidades y bienestar para mujeres y niñas, llevando nuestra esencia a cada rincón del mundo.</p>
+    </div>
+  </div>
+</div>
+
+<div class="prueba2">
+  <div class="abajo">
+      <h1>Ubicacion</h1>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3987.3238849730024!2d-75.75822252596625!3d2.0261417590308834!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e251e5eba187dc1%3A0x6390bf8c781ebe42!2sMatiz%20Colors%20Accesorios!5e0!3m2!1ses-419!2sco!4v1733072852513!5m2!1ses-419!2sco"></iframe>
+            <img src="{% static 'img/fondo 3.jpg' %}" alt="Visión">
+  </div>
+</div>
+
+<script src="{% static 'js/conocenos.js' %}"></script>
+{% endblock %}

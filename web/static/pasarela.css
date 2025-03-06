@@ -1,0 +1,255 @@
+/* General Styles */
+:root {
+    --white: #ffffff;
+    --black: #1a1a1a;
+    --pink: #ff6b99;
+    --light-pink: #ffecf2;
+    --purple:  rgb(164, 91, 170);
+    --light-purple: #f0e7ff;
+    --gray: #f0f0f0;
+}
+
+.checkout-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    font-family: 'Roboto', Arial, sans-serif;
+    color: var(--black);
+    background-color: var(--white);
+    margin-top: 6%;
+}
+
+.checkout-titulo {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--black);
+    font-size: 2rem;
+}
+
+.checkout-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+@media (max-width: 768px) {
+    .checkout-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Messages Styles */
+.messages {
+    margin-bottom: 1.5rem;
+}
+
+.alert {
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.alert-success {
+    background-color: var(--light-purple);
+    color: var(--purple);
+    border: 1px solid var(--purple);
+}
+
+.alert-danger {
+    background-color: var(--light-pink);
+    color: var(--pink);
+    border: 1px solid var(--pink);
+}
+
+.alert-warning {
+    background-color: var(--light-pink);
+    color: var(--black);
+    border: 1px solid var(--pink);
+}
+
+.alert-info {
+    background-color: var(--light-purple);
+    color: var(--black);
+    border: 1px solid var(--purple);
+}
+
+/* Form Styles */
+.checkout-form {
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.resumen-titulo {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--black);
+    font-size: 1.5rem;
+    border-bottom: 1px solid var(--gray);
+    padding-bottom: 0.75rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--black);
+}
+
+.form-group input, 
+.form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--gray);
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus, 
+.form-group select:focus {
+    outline: none;
+    border-color: var(--purple);
+}
+
+.form-check {
+    margin-bottom: 0.5rem;
+}
+
+.form-error {
+    color: var(--pink);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* Button Styles */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+}
+
+.btn-success {
+    background-color: var(--purple);
+    color: var(--white);
+    width: 100%;
+    font-weight: 500;
+}
+
+.btn-success:hover {
+    background-color:  rgb(164, 91, 170);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--black);
+    border: 1px solid var(--pink);
+}
+
+.btn-outline:hover {
+    background-color: var(--pink);
+    color: var(--white);
+}
+
+/* Order Summary Styles */
+.checkout-resumen {
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.resumen-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--gray);
+}
+
+.resumen-producto {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.resumen-imagen {
+    width: 60px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid var(--light-pink);
+}
+
+.resumen-total {
+    margin-top: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-align: right;
+    color: var(--black);
+}
+
+/* Additional accent styling */
+.checkout-form h2,
+.checkout-resumen h2 {
+    color: var(--purple);
+}
+
+.checkout-form input:focus,
+.checkout-form select:focus {
+    box-shadow: 0 0 0 3px rgba(138, 79, 255, 0.1);
+}
+
+.resumen-producto div div:first-child {
+    font-weight: 500;
+    color: var(--black);
+}
+
+.resumen-producto div div:last-child {
+    color: var(--purple);
+    font-size: 0.9rem;
+}
+
+.resumen-item > div:last-child {
+    color: var(--pink);
+    font-weight: 500;
+}
+
+/* Estilos para QR y comprobante */
+.payment-qr {
+    background-color: var(--light-purple);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    border: 1px solid var(--purple);
+}
+
+.qr-image {
+    max-width: 200px;
+    margin: 1rem 0;
+}
+
+.comprobante-info {
+    display: block;
+    margin-top: 0.5rem;
+    color: var(--pink);
+    font-size: 0.8rem;
+}
+
+#comprobante-container {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--gray);
+}

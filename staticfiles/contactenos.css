@@ -1,0 +1,86 @@
+.contacto-container {
+    max-width: 600px;
+    margin: 80px auto 20px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+
+}
+
+.contacto-container h2 {
+    font-size: 2.2rem;
+    color: #ff0077;
+    margin-bottom: 10px;
+}
+
+.contacto-container p {
+    font-size: 1.4rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+label {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1.4rem;
+}
+
+textarea {
+    resize: none;
+}
+
+button {
+    padding: 10px;
+    background-color: #ff0077;
+    color: white;
+    border: none;
+    font-size: 1.6rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #d10063;
+}
+
+/* Estilos para mensajes de éxito o error */
+.alertas {
+    margin-bottom: 20px;
+}
+
+.alert {
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.alert.success {
+    background-color: rgb(164, 91, 170);
+    color: white;
+}
+
+.alert.error {
+    background-color: #dc3545;
+    color: white;
+}
+

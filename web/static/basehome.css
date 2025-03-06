@@ -1,0 +1,425 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+  background-color: rgb(254, 226, 231);
+  color: #333;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 40px;
+  position: fixed;
+  width: 100%;
+  height: 11%;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+.header-scrolled {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2); 
+  backdrop-filter: blur(5px);
+  padding: 5px 40px;
+  transition: all 0.3s ease-in-out;
+}
+
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  max-width: 160px;
+  height: auto;
+}
+
+.logo h1 {
+  font-size: 2.6rem;
+  font-weight: bold;
+  color: #ff0077;
+  letter-spacing: 1px;
+  display: flex;
+}
+
+.logo span {
+  color: #ff71b3;
+  font-size: 2.6rem;
+  padding: 0 5px 0;
+}
+
+/* Navegación */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+nav ul {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+  margin: 0 5% 0 5%;
+  padding: 0;
+  transition: all 0.5s;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  font-size: 15px;
+  transition: color 0.3s ease-in-out;
+}
+
+nav ul li a:hover, nav ul li a.activo {
+  color: #E91E63;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown .submenu {
+  display: none;
+  position: absolute;
+  text-align: center;
+  top: 100%;
+  left: 0px;
+  background-color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  width: 150px;
+  padding: 10px 0;
+  margin: 0 0 0 -50px;
+  z-index: 100;
+}
+
+.dropdown:hover .submenu,
+.submenu.show-submenu {
+  display: block;
+}
+
+.iconos_2 {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.iconos_2 i {
+  font-size: 22px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.iconos_2 i:hover {
+  color: #ff0077;
+}
+
+img, .iconos_2 i {
+  max-width: 100%;
+  height: auto;
+}
+
+.iconos_2 i {
+  font-size: 2rem;
+}
+
+.user-container {
+  position: relative;
+  display: inline-block;
+}
+
+.user-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.user-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: -50px;
+  background: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  border-radius: 5px;
+  padding: 10px;
+  width: 150px;
+}
+
+.user-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-menu ul li {
+  padding: 10px;
+  text-align: left;
+}
+
+.user-menu ul li form {
+  width: 100%;
+}
+
+.user-menu ul li a, .user-menu ul li button {
+  text-decoration: none;
+  color: #333;
+  font-size: 1.4rem;
+  width: 100%;
+  display: block;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Iconos Usuario y Carrito */
+.iconos_2 .user-icon i,
+.iconos_2 .cart i {
+  color: black; 
+}
+
+.iconos_2 .user-icon i:hover,
+.iconos_2 .cart i:hover {
+  color: #ff0077; 
+}
+
+.user-menu ul li a:hover,
+.user-menu ul li button:hover {
+  background-color: #f8f9fa;
+  color: #ff0077;
+}
+
+.user-container:hover .user-menu {
+  display: block;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #333;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+.badge {
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  background-color: #ff0077;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+/* Estilos generales del footer */
+footer {
+  background-color: rgb(164, 91, 170);
+  color: white;
+  padding: 20px 0;
+  width: 100%;
+  text-align: center;
+  margin-top: auto; /* Empuja el footer hacia abajo */
+}
+
+.principal {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1500px;
+  margin: 0 auto;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.uno {
+  flex: 1;
+  margin: 20px;
+}
+
+.uno h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: white;
+  font-size: 2rem;
+}
+
+.uno p {
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+.iconos_1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  gap: 20px;
+}
+
+.iconos_1 img {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.iconos_1 img:hover {
+  transform: scale(1.1);
+}
+
+/* pppp */
+
+.checkbtn {
+  font-size: 30px;
+  float: right;
+  line-height: 80px;
+  margin-right: 40px;
+  cursor: pointer;
+}
+
+#check {
+  display: none;
+}
+
+@media (min-width: 859px) {
+  .checkbtn {
+    display: none;
+  }
+}
+
+@media (max-width: 952px) {
+  label.logo {
+    font-size: 20px;
+    padding-left: 50px;
+  }
+
+  nav ul li a {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 858px) {
+  .carousel {
+    width: 150%;
+    height: auto; 
+  }
+
+  .carousel img {
+    width: 150%;
+    height: auto; 
+  }
+
+  header {
+    padding: 1px 20px; 
+  }
+
+  .logo {
+    font-size: 2rem; 
+  }
+
+  .checkbtn {
+    display: block;
+  }
+
+  nav ul {
+    position: fixed;
+    width: 100%;
+    height: calc(100vh - 60px);
+    top: 65px;
+    margin: auto;
+    left: -100%;
+    text-align: center;
+    transition: left 0.5s ease;
+    flex-direction: column;
+    padding-top: 20px;
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2); 
+    backdrop-filter: blur(10px);
+    padding: 5px 40px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  nav ul li {
+    display: block;
+    margin: 10px 0;
+    line-height: 30px;
+  }
+
+  nav ul li a {
+    display: block;
+    padding: 5px;
+    font-size: 2rem;
+  }
+
+  .dropdown .submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 40%;
+    box-shadow: none;
+    width: 200px;
+    height: 150px;
+    padding: 10px 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2); 
+    backdrop-filter: blur(20px);
+    padding: 5px 40px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .dropdown.show .submenu {
+    display: block;
+  }
+
+  a:hover, a.activo {
+    background: none;
+    color: pink;
+  }
+
+  #check:checked ~ ul {
+    left: 0; /* Muestra el menú cuando está marcado */
+  }
+}

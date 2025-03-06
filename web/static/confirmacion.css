@@ -1,0 +1,249 @@
+.confirmation-page {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 15px 60px; 
+    min-height: 100vh;
+}
+
+.confirmacion-container {
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 30px;
+    background: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    text-align: center;
+    position: relative;
+}
+
+/* Elementos de la confirmación */
+.confirmacion-icon {
+    font-size: 50px;
+    color: #743a74;
+    margin-bottom: 15px;
+}
+
+.confirmacion-titulo {
+    font-size: 2.4rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.confirmacion-mensaje {
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+    line-height: 1.5;
+    color: #555;
+}
+
+/* Detalles del pedido */
+.confirmacion-detalles {
+    text-align: left;
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.resumen-titulo {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+/* Datos del cliente */
+.confirmacion-datos {
+    display: grid;
+    gap: 12px;
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+}
+
+.dato-item {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 5px;
+}
+
+.datos-titulo {
+    font-weight: bold;
+    color: #555;
+    flex: 0 0 130px;
+}
+
+.dato-valor {
+    flex: 1;
+    word-break: break-word; 
+}
+
+/* Lista de productos */
+.confirmacion-items {
+    margin-top: 25px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.items-lista {
+    max-height: 300px;
+    overflow-y: auto;
+    margin: 10px 0;
+}
+
+.confirmacion-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 1.5rem;
+}
+
+.item-descripcion {
+    flex: 1;
+    padding-right: 10px;
+}
+
+.item-precio {
+    font-weight: 500;
+}
+
+.confirmacion-total {
+    font-weight: bold;
+    font-size: 1.8rem;
+    margin-top: 15px;
+    text-align: right;
+    color: #333;
+    padding: 10px 0;
+}
+
+/* Botón de acción */
+.confirmacion-acciones {
+    margin-top: 30px;
+}
+
+.btn-success {
+    display: inline-block;
+    background-color: #9f009f;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+
+.btn-success:hover {
+    background-color: #aa38aa;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Media queries para responsive */
+@media (max-width: 767px) {
+    .confirmation-page {
+        padding-top: 90px; /* Menos espacio en móvil */
+    }
+    
+    .confirmacion-container {
+        padding: 20px;
+        border-radius: 8px;
+    }
+    
+    .confirmacion-titulo {
+        font-size: 2rem;
+    }
+    
+    .confirmacion-mensaje {
+        font-size: 1.4rem;
+    }
+    
+    .confirmacion-datos {
+        font-size: 1.4rem;
+    }
+    
+    .dato-item {
+        flex-direction: column;
+        margin-bottom: 10px;
+    }
+    
+    .datos-titulo {
+        flex: 0 0 100%;
+        margin-bottom: 2px;
+    }
+    
+    .confirmacion-item {
+        font-size: 1.4rem;
+    }
+    
+    .btn-success {
+        width: 100%;
+        padding: 12px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .confirmation-page {
+        padding-top: 80px;
+        padding-bottom: 40px;
+    }
+    
+    .confirmacion-container {
+        padding: 15px;
+    }
+    
+    .confirmacion-icon {
+        font-size: 40px;
+    }
+    
+    .confirmacion-titulo {
+        font-size: 1.8rem;
+    }
+    
+    .confirmacion-mensaje {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+    }
+    
+    .resumen-titulo {
+        font-size: 1.6rem;
+    }
+    
+    .confirmacion-datos,
+    .confirmacion-item {
+        font-size: 1.3rem;
+    }
+    
+    .confirmacion-total {
+        font-size: 1.6rem;
+    }
+    
+    .btn-success {
+        font-size: 1.4rem;
+    }
+}
+
+/* Para pantallas muy pequeñas */
+@media (max-width: 320px) {
+    .confirmacion-container {
+        padding: 10px;
+    }
+    
+    .confirmacion-titulo {
+        font-size: 1.6rem;
+    }
+    
+    .confirmacion-mensaje,
+    .confirmacion-datos,
+    .confirmacion-item {
+        font-size: 1.2rem;
+    }
+    
+    .resumen-titulo {
+        font-size: 1.5rem;
+    }
+}

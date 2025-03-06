@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Registro{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'registre.css' %}">
+
+
+<main>
+    <form method="POST" action="{% url 'register' %}">
+        {% csrf_token %}
+        <div>
+            <h2>Registro</h2>
+
+            <!-- Mostrar los mensajes de error -->
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <p style="color: #fd2188;">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <input type="text" name="username" placeholder="Nombre del Usuario" required> 
+            <input type="email" name="email" placeholder="Correo Electrónico" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
+            <input type="password" name="confirm_password" placeholder="Confirmar Contraseña" required>
+            <button type="submit">Registrarse</button>
+            <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a></p>
+        </div>
+    </form>
+</main>
+{% endblock %}

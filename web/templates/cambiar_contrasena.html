@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <title>Cambiar Contraseña</title>
+    <link rel="stylesheet" href="{% static 'cambio.css' %}">
+</head>
+<body>
+    <h2>Ingresa tu nueva contraseña</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="password" name="password" placeholder="Nueva contraseña" required>
+        <input type="password" name="confirm_password" placeholder="Confirmar contraseña" required>
+        <button type="submit">Guardar</button>
+    </form>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

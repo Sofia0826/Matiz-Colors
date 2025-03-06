@@ -1,0 +1,66 @@
+  {% extends "base.html" %}
+  {% load static %}
+
+  {% block title %}home{% endblock %}
+
+  {% block content %}
+
+  <link rel="stylesheet" href="{% static 'home.css' %}" >
+
+  <div class="carousel">
+    <div class="carousel-track">
+      <div class="slide">
+        <img src="{% static 'img/uno.jpg' %}" alt="Imagen 1">
+      </div>
+      <div class="slide">
+        <img src="{% static 'img/dos.jpg' %}" alt="Imagen 2">
+      </div>
+      <div class="slide">
+        <img src="{% static 'img/tres.jpg' %}" alt="Imagen 3">
+      </div>
+    </div>
+  </div>    
+
+  <h1 class="titulo">Lo más relevante</h1>
+  <div class="grid" id="lista-ropa">
+    <div class="items">
+      <img src="{% static 'img/fondo1.jpg' %}">
+      <div class="info oculto">
+        <h3>Creadoras de esta hermosa marca, dedicadas a diseñar cada prenda con amor, pasión y dedicación, para que cada detalle cuente una historia única.</h3>
+        <p>Ingrid Matiz - Claudia Matiz</p>
+      </div>
+    </div>
+
+    <div class="items">
+      <img src="{% static 'img/vestido1.jpg' %}">
+      <div class="info oculto">
+        <h3>Categoría Niña</h3>
+        <p>En nuestra categoría Niña, encontrarás una colección exclusiva de prendas pintadas a mano, diseñadas para realzar la alegría y ternura de las más pequeñas. Cada prenda es una obra de arte única, creada con dedicación y amor para brindar estilo y comodidad en cada ocasión.</p>
+        <h3>Moda Única y Encantadora</h3>
+        <a class="Categoria" data-id="3" href="{% url 'niña' %}">Ver más</a>
+      </div>
+    </div>
+
+    <div class="items">
+      <img src="{% static 'img/fonfo 1.jpg' %}">
+      <div class="info oculto">
+        <h3>Categoría Mujer</h3>
+        <p>Nuestra categoría Mujer ofrece una selección de prendas pintadas a mano que fusionan estilo, creatividad y autenticidad. Cada diseño está cuidadosamente elaborado para destacar la belleza y personalidad de quien lo lleva, convirtiendo cada pieza en una expresión única de arte y moda.</p>
+        <h3>Elegancia y Arte en Cada Prenda</h3>
+        <a class="Categoria" data-id="4" href="{% url 'mujer' %}">Ver más</a>
+      </div>
+    </div>
+
+    <div class="items">
+      <img src="{% static 'img/fondo4.jpg' %}">
+      <div class="info oculto">
+        <h3>Diseños que empoderan mujeres y niñas</h3>
+        <p>Matiz Color's</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="{% static 'js/index.js' %}" defer></script>
+  <script src="{% static 'js/carrucel.js' %}" defer></script>
+
+  {% endblock %}

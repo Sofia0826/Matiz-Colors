@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Tienda Mujer{% endblock %}
+
+{% block content %}
+<script>
+    const userLoggedIn = "{{ request.user.is_authenticated|yesno:'true,false' }}";
+</script>
+<link rel="stylesheet" href="{% static 'galeria.css' %}">
+
+<!-- Mostrar el nombre de la categoría antes de los productos -->
+{% if productos %}
+    <h1 class="categoria-titulo">{{ productos.0.categoria.nombre }}</h1>
+{% endif %}
+
+<div class="grid productos-container">
+    {% for producto in productos %}
+        {% if producto.visible %}
+            <div class="items" 
+                 data-id="{{ producto.id }}" 
+                 data-title="{{ producto.nombre }}" 
+                 data-price="{{ producto.precio }}" 
+                 data-img="{{ producto.imagen.url }}"> 
+
+                <img src="{{ producto.imagen.url }}" class="imagen-detalle" alt="{{ producto.nombre }}">
+                <div class="info">
+                    <h3>{{ producto.nombre }}</h3>
+                    <p>{{ producto.descripcion }}</p>
+                    <div class="precio">
+                            <p>${{ producto.precio }}</p>
+                    </div>
+                    <button class="ver-detalles">Ver Detalles</button>
+                </div>
+            </div> <!-- ✅ Se cierra correctamente .items -->
+        {% endif %} <!-- ✅ Se cierra el bloque if -->
+    {% endfor %}
+</div> <!-- ✅ Se cierra .productos-container -->
+
+<!-- Modal de Detalles -->
+<div class="modal-overlay" id="modal-overlay"></div>
+<div class="modal" id="detalle-modal">
+    <div class="modal-content">
+        <span class="close" id="modal-close">&times;</span>
+        <div class="modal-container">
+            <div class="modal-img-container">
+                <img id="modal-imagen" alt="Imagen del producto">
+            </div>
+            <div class="modal-details">
+                <h2 id="modal-titulo"></h2>
+                <p id="modal-precio" class="modal-precio"></p> 
+
+                <div class="modal-selects">
+                    <div class="select-group">
+                        <label for="colores">Color:</label>
+                        <select id="colores" class="form-select">
+                            <option value="Rosado">Rosado</option>
+                            <option value="Azul">Azul</option>
+                            <option value="Morado">Morado</option>
+                        </select>
+                    </div>
+                    
+                    <div class="select-group">
+                        <label for="tallas">Talla:</label>
+                        <select id="tallas" class="form-select">
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- ✅ FORMULARIO DENTRO DE LA MODAL -->
+                <div id="modal-auth-content">
+                    {% if request.user.is_authenticated %}
+                    <form method="POST" action="{% url 'niña' %}" id="modal-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="producto_id" id="modal-producto-id">
+                        <button type="submit" class="btn w-100 btn-agregar">
+                            Agregar al carrito
+                        </button>
+                    </form>
+                    {% else %}
+                    <a href="{% url 'register' %}?next={{ request.path }}" class="btn btn-w-100">
+                        Regístrate para Comprar
+                    </a>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/index.js' %}" defer></script>
+{% endblock scripts %}

@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Finalizar Compra{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'pasarela.css' %}">
+
+<div class="checkout-container">
+    <h1 class="checkout-titulo">Finalizar Compra</h1>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <div class="checkout-grid">
+        <div class="checkout-form">
+            <h2 class="resumen-titulo">Datos de Contacto</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="{{ form.nombre.id_for_label }}">Nombre Completo</label>
+                    {{ form.nombre }}
+                    {% if form.nombre.errors %}
+                    <div class="form-error">{{ form.nombre.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}">Correo Electrónico</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                    <div class="form-error">{{ form.email.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.telefono.id_for_label }}">Teléfono</label>
+                    {{ form.telefono }}
+                    {% if form.telefono.errors %}
+                    <div class="form-error">{{ form.telefono.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <!-- Campos de dirección -->
+                <div class="form-group">
+                    <label for="{{ form.direccion.id_for_label }}">Dirección de Entrega</label>
+                    {{ form.direccion }}
+                    {% if form.direccion.errors %}
+                    <div class="form-error">{{ form.direccion.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.ciudad.id_for_label }}">Ciudad</label>
+                    {{ form.ciudad }}
+                    {% if form.ciudad.errors %}
+                    <div class="form-error">{{ form.ciudad.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Método de Pago -->
+                <h2 class="resumen-titulo">Método de Pago</h2>
+                <div class="form-group">
+                    {% for radio in form.metodo_pago %}
+                        <div class="form-check">
+                            {{ radio.tag }} {{ radio.choice_label }}
+                        </div>
+                    {% endfor %}
+                    {% if form.metodo_pago.errors %}
+                        <div class="form-error">{{ form.metodo_pago.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <!-- QR de pago -->
+                <div id="nequi-qr" class="payment-qr" style="display: none;">
+                    <h3>Pago con Nequi</h3>
+                    <p>Escanea este código QR para realizar el pago:</p>
+                    <img src="{% static 'img/nequi.jpg' %}" alt="QR Nequi" class="qr-image">
+                </div>
+                
+                <div id="bancolombia-qr" class="payment-qr" style="display: none;">
+                    <h3>Pago con Bancolombia</h3>
+                    <p>Escanea este código QR para realizar el pago:</p>
+                    <img src="{% static 'img/bancolombia.jpg' %}" alt="QR Bancolombia" class="qr-image">
+                </div>
+                
+                <!-- Subida de comprobante -->
+                <div id="comprobante-container" class="form-group" style="display: none;">
+                    <label for="{{ form.comprobante.id_for_label }}">Comprobante de Pago</label>
+                    {{ form.comprobante }}
+                    <small class="comprobante-info">Por favor sube una captura del comprobante de pago</small>
+                    {% if form.comprobante.errors %}
+                    <div class="form-error">{{ form.comprobante.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <button type="submit" class="btn btn-success">
+                    Confirmar Pedido
+                </button>
+            </form>
+        </div>
+        
+        <div class="checkout-resumen">
+            <h2 class="resumen-titulo">Resumen del Pedido</h2>
+            
+            {% for item in carrito_items %}
+            <div class="resumen-item">
+                <div class="resumen-producto">
+                    <img src="{{ item.producto.imagen.url }}" alt="{{item.producto.nombre }}" class="resumen-imagen">
+                    <div>
+                        <div>{{ item.producto.nombre }}</div>
+                        <div>Cantidad: {{ item.cantidad }}</div>
+                    </div>
+                </div>
+                <div>${{ item.subtotal }}</div>
+            </div>
+            {% endfor %}
+            
+            <div class="resumen-total">
+                Total: ${{ total }}
+            </div>
+            
+            <div style="margin-top: 2rem;">
+                <a href="{% url 'ver_carrito' %}" class="btn btn-outline">
+                    Volver al Carrito
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Script para mostrar/ocultar QRs y campo de comprobante
+    document.addEventListener('DOMContentLoaded', function() {
+        const metodoPagoInputs = document.querySelectorAll('input[name="metodo_pago"]');
+        const nequiQR = document.getElementById('nequi-qr');
+        const bancolombiaQR = document.getElementById('bancolombia-qr');
+        const comprobanteContainer = document.getElementById('comprobante-container');
+        
+        metodoPagoInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                // Ocultar todos los QRs primero
+                nequiQR.style.display = 'none';
+                bancolombiaQR.style.display = 'none';
+                
+                // Mostrar el QR correspondiente
+                if (this.value === 'nequi') {
+                    nequiQR.style.display = 'block';
+                } else if (this.value === 'bancolombia') {
+                    bancolombiaQR.style.display = 'block';
+                }
+                
+                // Siempre mostrar el campo de comprobante cuando se selecciona un método
+                comprobanteContainer.style.display = 'block';
+            });
+        });
+        
+        // Verificar si ya hay un método seleccionado (al cargar la página)
+        const selectedMethod = document.querySelector('input[name="metodo_pago"]:checked');
+        if (selectedMethod) {
+            if (selectedMethod.value === 'nequi') {
+                nequiQR.style.display = 'block';
+            } else if (selectedMethod.value === 'bancolombia') {
+                bancolombiaQR.style.display = 'block';
+            }
+            comprobanteContainer.style.display = 'block';
+        }
+    });
+</script>
+{% endblock %}

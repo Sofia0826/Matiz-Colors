@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+/* Estilos del formulario de login */
+main {
+    background: white;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(82, 43, 121, 0.5);
+    text-align: center;
+    width: 400px;
+    margin: 50px auto;
+    margin-top: 100px;
+}
+
+main p a {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #ff0077;
+    transition: color 0.3s ease;
+}
+
+p {
+    margin-top: 15px;
+}
+
+main p a:hover {
+    color: #ff71b3; 
+}
+
+
+
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(234, 0, 255);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: rgb(126, 1, 137);
+}
+
+/* Estilos de los mensajes */
+.messages {
+    margin-bottom: 10px;
+}
+
+.messages div {
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #ff0077;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #ff449b;
+}
