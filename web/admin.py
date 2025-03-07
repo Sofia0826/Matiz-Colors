@@ -19,7 +19,10 @@ class OrdenItemInline(admin.TabularInline):
     readonly_fields = ('calcular_subtotal',)
     
     def calcular_subtotal(self, instance):
-        return instance.precio * instance.cantidad
+        precio = getattr(instance, 'precio', 0) or 0
+        cantidad = getattr(instance, 'cantidad', 0) or 0
+        return precio * cantidad
+
     
     calcular_subtotal.short_description = 'Subtotal'
 
