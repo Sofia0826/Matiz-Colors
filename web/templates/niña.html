@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Tienda Mujer{% endblock %}
+{% block title %}Tienda Niña{% endblock %}
 
 {% block content %}
 <script>
@@ -9,35 +9,37 @@
 </script>
 <link rel="stylesheet" href="{% static 'galeria.css' %}">
 
-<!-- Mostrar el nombre de la categoría antes de los productos -->
-{% if productos %}
-    <h1 class="categoria-titulo">{{ productos.0.categoria.nombre }}</h1>
+
+<!-- Productos agrupados por categoría -->
+{% if productos_por_categoria %}
+    {% for categoria_nombre, productos_lista in productos_por_categoria.items %}
+        <h2 class="subcategoria-titulo">{{ categoria_nombre }}</h2>
+        <div class="grid productos-container">
+            {% for producto in productos_lista %}
+                <div class="items" 
+                     data-id="{{ producto.id }}" 
+                     data-title="{{ producto.nombre }}" 
+                     data-price="{{ producto.precio }}" 
+                     data-img="{{ producto.imagen.url }}"> 
+
+                    <img src="{{ producto.imagen.url }}" class="imagen-detalle" alt="{{ producto.nombre }}">
+                    <div class="info">
+                        <h3>{{ producto.nombre }}</h3>
+                        <p>{{ producto.descripcion }}</p>
+                        <div class="precio">
+                                <p>${{ producto.precio }}</p>
+                        </div>
+                        <button class="ver-detalles">Ver Detalles</button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No hay productos disponibles en esta categoría.</p>
 {% endif %}
 
-<div class="grid productos-container">
-    {% for producto in productos %}
-        {% if producto.visible %}
-            <div class="items" 
-                 data-id="{{ producto.id }}" 
-                 data-title="{{ producto.nombre }}" 
-                 data-price="{{ producto.precio }}" 
-                 data-img="{{ producto.imagen.url }}"> 
-
-                <img src="{{ producto.imagen.url }}" class="imagen-detalle" alt="{{ producto.nombre }}">
-                <div class="info">
-                    <h3>{{ producto.nombre }}</h3>
-                    <p>{{ producto.descripcion }}</p>
-                    <div class="precio">
-                            <p>${{ producto.precio }}</p>
-                    </div>
-                    <button class="ver-detalles">Ver Detalles</button>
-                </div>
-            </div> <!-- ✅ Se cierra correctamente .items -->
-        {% endif %} <!-- ✅ Se cierra el bloque if -->
-    {% endfor %}
-</div> <!-- ✅ Se cierra .productos-container -->
-
-<!-- Modal de Detalles -->
+<!-- Modal de Detalles (mantener código existente) -->
 <div class="modal-overlay" id="modal-overlay"></div>
 <div class="modal" id="detalle-modal">
     <div class="modal-content">
@@ -70,12 +72,13 @@
                     </div>
                 </div>
 
-                <!-- ✅ FORMULARIO DENTRO DE LA MODAL -->
+                <!-- FORMULARIO DENTRO DE LA MODAL -->
                 <div id="modal-auth-content">
                     {% if request.user.is_authenticated %}
-                    <form method="POST" action="{% url 'niña' %}" id="modal-form">
+                    <form method="POST" action="{% url 'mujer' %}" id="modal-form">
                         {% csrf_token %}
                         <input type="hidden" name="producto_id" id="modal-producto-id">
+                        <input type="hidden" name="talla" id="modal-talla-seleccionada" value="M">
                         <button type="submit" class="btn w-100 btn-agregar">
                             Agregar al carrito
                         </button>
@@ -86,14 +89,18 @@
                     </a>
                     {% endif %}
                 </div>
-
             </div>
         </div>
     </div>
 </div>
-
 {% endblock %}
 
 {% block scripts %}
 <script src="{% static 'js/index.js' %}" defer></script>
+<script>
+    // Actualizar el campo de talla cuando cambia la selección
+    document.getElementById('tallas').addEventListener('change', function() {
+        document.getElementById('modal-talla-seleccionada').value = this.value;
+    });
+</script>
 {% endblock scripts %}

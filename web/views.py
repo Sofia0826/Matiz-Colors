@@ -30,42 +30,55 @@ def home(request):
 
 # Vista para galería de productos por sección
 def galeria(request, seccion, template_name):
-    categorias = Categoria.objects.filter(producto__seccion=seccion).distinct()
-    productos = Producto.objects.filter(seccion=seccion, visible=True)
-    
+    categorias = Categoria.objects.all()  # Obtiene todas las categorías disponibles
+    productos = Producto.objects.filter(seccion=seccion, visible=True).select_related('categoria')
+
     for producto in productos:
         try:
             descuento = getattr(producto, 'descuento', None)
             producto.precio_final = descuento if descuento else producto.precio
         except (InvalidOperation, ValueError):
             producto.precio_final = producto.precio  
-    
+
     if not productos.exists():
         messages.error(request, f"No hay productos disponibles para la sección {seccion.capitalize()}.")
-    
+
     return render(request, template_name, {'categorias': categorias, 'productos': productos})
 
 def mujer(request):
-    producto_lista = Producto.objects.filter(linea='mujer', visible=True)
+    categoria_id = request.GET.get('categoria')
+    
+    # Si se selecciona una categoría específica
+    if categoria_id and categoria_id.isdigit():
+        producto_lista = Producto.objects.filter(linea="mujer", visible=True, categoria_id=int(categoria_id))
+      
+    else:
+        producto_lista = Producto.objects.filter(linea="mujer", visible=True)
+    
+    # Agrupamos productos por categoría para mostrarlos organizados
+    productos_por_categoria = {}
+    for producto in producto_lista:
+        if producto.categoria.nombre not in productos_por_categoria:
+            productos_por_categoria[producto.categoria.nombre] = []
+        productos_por_categoria[producto.categoria.nombre].append(producto)
 
+    # Manejo del formulario POST para agregar al carrito (mantener código existente)
     if request.method == "POST" and 'producto_id' in request.POST:
-        producto_id = request.POST.get('producto_id', "").strip()  # Aseguramos que no sea None o vacío
-        talla = request.POST.get('talla', 'M')  # Default a M si no está
+        producto_id = request.POST.get('producto_id', "").strip()
+        talla = request.POST.get('talla', 'M')
 
         if not producto_id.isdigit():
             messages.error(request, "ID del producto inválido.")
-            return redirect('niña')
-
-        print(f"📌 ID del producto recibido: {producto_id}")  # Para depuración
+            return redirect('mujer')
 
         try:
-            producto = Producto.objects.get(id=int(producto_id), linea='mujer', visible=True)
-            
+            producto = Producto.objects.get(id=int(producto_id), linea="mujer", visible=True)
+
             if not request.user.is_authenticated:
                 if not request.session.session_key:
                     request.session.create()
                 sesion_id = request.session.session_key
-                
+
                 carrito_item, created = CarritoItem.objects.get_or_create(
                     producto=producto,
                     sesion_id=sesion_id,
@@ -81,38 +94,60 @@ def mujer(request):
                     talla=talla,
                     defaults={'cantidad': 1}
                 )
-            
+
             if not created:
                 carrito_item.cantidad += 1
                 carrito_item.save()
-            
+
             messages.success(request, f"{producto.nombre} añadido al carrito")
+            return redirect('mujer')
+
         except Producto.DoesNotExist:
             messages.error(request, "Producto no encontrado")
-    
-    return render(request, 'mujer.html', {'productos': producto_lista})
+            return redirect('mujer')
+
+    return render(request, 'mujer.html', {
+        'productos': producto_lista,
+        'productos_por_categoria': productos_por_categoria,
+        'categoria_seleccionada': int(categoria_id) if categoria_id and categoria_id.isdigit() else None
+    })
 
 def niña(request):
-    producto_lista = Producto.objects.filter(linea='niña', visible=True)
+    categorias = Categoria.objects.filter(producto__linea="niña", producto__visible=True).distinct()
+    categoria_id = request.GET.get('categoria')
+    
+    # Si se selecciona una categoría específica
+    if categoria_id and categoria_id.isdigit():
+        producto_lista = Producto.objects.filter(linea="niña", visible=True, categoria_id=int(categoria_id))
+   
+    else:
+        producto_lista = Producto.objects.filter(linea="niña", visible=True)
+        
+    
+    # Agrupamos productos por categoría para mostrarlos organizados
+    productos_por_categoria = {}
+    for producto in producto_lista:
+        if producto.categoria.nombre not in productos_por_categoria:
+            productos_por_categoria[producto.categoria.nombre] = []
+        productos_por_categoria[producto.categoria.nombre].append(producto)
 
+    # Manejo del formulario POST para agregar al carrito (mantener código existente)
     if request.method == "POST" and 'producto_id' in request.POST:
-        producto_id = request.POST.get('producto_id', "").strip()  # Aseguramos que no sea None o vacío
-        talla = request.POST.get('talla', 'M')  # Default a M si no está
+        producto_id = request.POST.get('producto_id', "").strip()
+        talla = request.POST.get('talla', 'M')
 
         if not producto_id.isdigit():
             messages.error(request, "ID del producto inválido.")
             return redirect('niña')
 
-        print(f"📌 ID del producto recibido: {producto_id}")  # Para depuración
-
         try:
-            producto = Producto.objects.get(id=int(producto_id), linea='niña', visible=True)
-            
+            producto = Producto.objects.get(id=int(producto_id), linea="niña", visible=True)
+
             if not request.user.is_authenticated:
                 if not request.session.session_key:
                     request.session.create()
                 sesion_id = request.session.session_key
-                
+
                 carrito_item, created = CarritoItem.objects.get_or_create(
                     producto=producto,
                     sesion_id=sesion_id,
@@ -128,16 +163,23 @@ def niña(request):
                     talla=talla,
                     defaults={'cantidad': 1}
                 )
-            
+
             if not created:
                 carrito_item.cantidad += 1
                 carrito_item.save()
-            
+
             messages.success(request, f"{producto.nombre} añadido al carrito")
+            return redirect('niña')
+
         except Producto.DoesNotExist:
             messages.error(request, "Producto no encontrado")
-    
-    return render(request, 'niña.html', {'productos': producto_lista})
+            return redirect('niña')
+
+    return render(request, 'niña.html', {
+        'productos': producto_lista,
+        'productos_por_categoria': productos_por_categoria,
+        'categoria_seleccionada': int(categoria_id) if categoria_id and categoria_id.isdigit() else None
+    })
 
 # Vista sobre nosotros
 def conocenos(request):
