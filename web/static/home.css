@@ -1,127 +1,134 @@
-H1/* Carrusel */
+/* Carrusel */
 .carousel {
-    position: relative;
-    width: 100%;
-    height: 600px;
-    margin: 0 auto;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  }
+  position: relative;
+  width: 100%;
+  height: 600px; /* Altura predeterminada */
+  margin: 0 auto;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
 
-  .carousel-track {
-    display: flex;
-    transition: transform 0.8s ease-in-out;
-  }
+.header {
+  position: relative;
+  z-index: 2;
+}
 
-  .slide {
-    min-width: 100%;
-    margin-bottom: 10px;
-  }
+.carousel-track {
+  display: flex;
+  transition: transform 0.8s ease-in-out;
+}
 
-  .slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  }
+.slide {
+  min-width: 100%;
+  margin-bottom: 10px;
+}
 
-  @keyframes slide {
-    0% { transform: translateX(0); }
-    33% { transform: translateX(-100%); }
-    66% { transform: translateX(-200%); }
-    100% { transform: translateX(0); }
-  }
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
 
-  .carousel-track {
-    animation: slide 20s infinite;
-  }
+/* Animación del carrusel */
+@keyframes slide {
+  0% { transform: translateX(0); }
+  33% { transform: translateX(-100%); }
+  66% { transform: translateX(-200%); }
+  100% { transform: translateX(0); }
+}
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    width: 100%;
-    max-width: 1500px;
-    margin: 0 auto;
-    margin-bottom: 20px;
+.carousel-track {
+  animation: slide 20s infinite;
+}
+
+/* Grid de productos */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto 20px;
 }
 
 .items {
-    position: relative;
-    overflow: hidden;
-    border-radius: 25px; 
-    transition: transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border-radius: 25px;
+  transition: transform 0.3s ease;
 }
 
 .items:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .items img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; 
-    display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .info {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 15px;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 15px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .items:hover .info {
-    opacity: 1;
-    visibility: visible;
+  opacity: 1;
+  visibility: visible;
 }
 
 .info h3, .info p {
-    color: white;
-    margin: 5px 0;
+  color: white;
+  margin: 5px 0;
 }
+
 /* Botón estilo elegante */
 .titulo {
   text-align: center;
-  font-size: 5rem; 
-  margin: 30px 0; 
+  font-size: 5rem;
+  margin: 30px 0;
   color: #333;
-
 }
 
 a.Categoria {
   display: inline-block;
-  background: linear-gradient(135deg, #ff69b4, #ff1493); 
+  background: linear-gradient(135deg, #ff69b4, #ff1493);
   color: white;
   border: none;
   padding: 12px 20px;
-  border-radius: 25px; 
+  border-radius: 25px;
   cursor: pointer;
   font-weight: bold;
   text-decoration: none;
   text-transform: uppercase;
-  letter-spacing: 1.5px; 
+  letter-spacing: 1.5px;
   transition: all 0.3s ease;
   margin-top: 10px;
-  box-shadow: 0 4px 8px rgba(255, 20, 147, 0.5); 
+  box-shadow: 0 4px 8px rgba(255, 20, 147, 0.5);
 }
 
 /* Efecto hover: cambia el degradado y eleva el botón */
 a.Categoria:hover {
-  background: linear-gradient(135deg, #ff1493, #ff69b4); 
-  transform: translateY(-5px); 
+  background: linear-gradient(135deg, #ff1493, #ff69b4);
+  transform: translateY(-5px);
   box-shadow: 0 6px 12px rgba(255, 20, 147, 0.7);
 }
 
@@ -134,13 +141,31 @@ body {
 
 /* Diseño Responsive */
 @media (max-width: 1024px) {
-    .grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .carousel {
+    height: 800px; 
+    width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
-    .grid {
-        grid-template-columns: 1fr;
-    }
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .carousel {
+    height: 500px; 
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .carousel {
+    height: 350px; 
+    width: 100%;
+  }
 }
