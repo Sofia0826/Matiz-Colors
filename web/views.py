@@ -454,6 +454,7 @@ def enviar_correo_empresa(orden):
         mensaje,
         'mariasofiapimentelplaza@gmail.com', 
         [orden.email],  
+        fail_silently=False,
     )
 
     # Adjuntar el comprobante si existe
