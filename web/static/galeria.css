@@ -357,10 +357,16 @@ button#modal-agregar-carrito:hover {
   .items {
       flex: 1 1 calc(50% - 20px); 
   }
+  .subcategoria-titulo {
+    margin-top: 15%;
+  }
 }
 
 @media (max-width: 600px) {
   .items {
       flex: 1 1 100%;
+  }
+  .subcategoria-titulo {
+    margin-top: 15%;
   }
 }

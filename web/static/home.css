@@ -2,7 +2,7 @@
 .carousel {
   position: relative;
   width: 100%;
-  height: 500px;
+  height: 700px;
   margin: 0 auto;
   overflow: hidden;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -183,7 +183,7 @@ body {
     grid-template-columns: 1fr;
   }
   .carousel {
-    height: 30px; 
+    height: 400px; 
     width: 100%;
   }
   .slide img {
