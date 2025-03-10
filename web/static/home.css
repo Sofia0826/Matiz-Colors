@@ -92,14 +92,15 @@
   padding: 15px;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  display: none;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
+/* Aparece cuando pasas el mouse sobre .items */
 .items:hover .info {
   opacity: 1;
   visibility: visible;
 }
+
 
 .info h3, .info p {
   color: white;
@@ -182,8 +183,9 @@ body {
   .grid {
     grid-template-columns: 1fr;
   }
+
   .carousel {
-    height: 400px; 
+    height: 100%; 
     width: 100%;
   }
   .slide img {

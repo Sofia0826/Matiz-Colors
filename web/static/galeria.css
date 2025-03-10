@@ -358,7 +358,7 @@ button#modal-agregar-carrito:hover {
       flex: 1 1 calc(50% - 20px); 
   }
   .subcategoria-titulo {
-    margin-top: 15%;
+    margin-top: 30%;
   }
 }
 
@@ -367,6 +367,6 @@ button#modal-agregar-carrito:hover {
       flex: 1 1 100%;
   }
   .subcategoria-titulo {
-    margin-top: 15%;
+    margin-top: 30%;
   }
 }
