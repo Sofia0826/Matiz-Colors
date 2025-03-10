@@ -113,16 +113,14 @@ def mujer(request):
     })
 
 def niña(request):
-    categorias = Categoria.objects.filter(producto__linea="niña", producto__visible=True).distinct()
     categoria_id = request.GET.get('categoria')
     
     # Si se selecciona una categoría específica
     if categoria_id and categoria_id.isdigit():
         producto_lista = Producto.objects.filter(linea="niña", visible=True, categoria_id=int(categoria_id))
-   
+      
     else:
         producto_lista = Producto.objects.filter(linea="niña", visible=True)
-        
     
     # Agrupamos productos por categoría para mostrarlos organizados
     productos_por_categoria = {}
@@ -138,7 +136,7 @@ def niña(request):
 
         if not producto_id.isdigit():
             messages.error(request, "ID del producto inválido.")
-            return redirect('niña')
+            return redirect('mujer')
 
         try:
             producto = Producto.objects.get(id=int(producto_id), linea="niña", visible=True)
@@ -454,8 +452,8 @@ def enviar_correo_empresa(orden):
     email = EmailMessage(
         asunto,
         mensaje,
-        'mariasofiapimentelplaza@gmail.com',  # Correo de la tienda
-        ['mariasofiapimentelplaza@gmail.com'],  # Destinatarios
+        'mariasofiapimentelplaza@gmail.com', 
+        [orden.email],  
     )
 
     # Adjuntar el comprobante si existe

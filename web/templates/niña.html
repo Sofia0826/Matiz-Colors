@@ -75,7 +75,7 @@
                 <!-- FORMULARIO DENTRO DE LA MODAL -->
                 <div id="modal-auth-content">
                     {% if request.user.is_authenticated %}
-                    <form method="POST" action="{% url 'mujer' %}" id="modal-form">
+                    <form method="POST" action="{% url 'niña' %}" id="modal-form">
                         {% csrf_token %}
                         <input type="hidden" name="producto_id" id="modal-producto-id">
                         <input type="hidden" name="talla" id="modal-talla-seleccionada" value="M">
