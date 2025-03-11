@@ -1,0 +1,33 @@
+# Ignorar base de datos SQLite
+db.sqlite3
+db.sqlite3-journal
+
+# Ignorar migraciones de Django (excepto la carpeta)
+**/migrations/*.pyc
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# Ignorar archivos de caché de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignorar archivos de entorno virtual
+venv/
+.env
+*.env
+
+# Ignorar archivos estáticos y media subidos por usuarios
+staticfiles/
+media/
+
+# Ignorar configuraciones de IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ignorar dependencias instaladas
+*.egg-info/
+*.log
