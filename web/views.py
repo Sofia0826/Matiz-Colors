@@ -450,12 +450,13 @@ def enviar_correo_empresa(orden):
     mensaje += "\n\nPor favor, revisa el sistema para gestionar el pedido."
 
     email = EmailMessage(
-        asunto,
-        mensaje,
-        'mariasofiapimentelplaza@gmail.com', 
-        [orden.email],  
-        fail_silently=False,
+    asunto,
+    mensaje,
+    'mariasofiapimentelplaza@gmail.com', 
+    [orden.email]  
     )
+    email.send(fail_silently=False)  
+
 
     # Adjuntar el comprobante si existe
     if orden.comprobante:
@@ -480,7 +481,7 @@ def pasarela(request):
 
     if not carrito_items:
         messages.warning(request, "Tu carrito está vacío")
-        return redirect('carrito')
+        return redirect('ver_carrito')
 
     total = sum(item.subtotal() for item in carrito_items)
 
