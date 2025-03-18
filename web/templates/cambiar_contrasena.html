@@ -4,13 +4,33 @@
     {% load static %}
     <title>Cambiar Contraseña</title>
     <link rel="stylesheet" href="{% static 'cambio.css' %}">
+    <script>
+        function togglePasswordVisibility(inputId, toggleId) {
+            const passwordInput = document.getElementById(inputId);
+            const toggleIcon = document.getElementById(toggleId);
+            
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleIcon.innerHTML = "👁️";
+            } else {
+                passwordInput.type = "password";
+                toggleIcon.innerHTML = "👁️‍🗨️";
+            }
+        }
+    </script>
 </head>
 <body>
     <h2>Ingresa tu nueva contraseña</h2>
     <form method="POST">
         {% csrf_token %}
-        <input type="password" name="password" placeholder="Nueva contraseña" required>
-        <input type="password" name="confirm_password" placeholder="Confirmar contraseña" required>
+        <div class="password-container">
+            <input type="password" name="password" id="passwordField" placeholder="Nueva contraseña" required>
+            <span class="password-toggle" id="passwordToggle" onclick="togglePasswordVisibility('passwordField', 'passwordToggle')">👁️‍🗨️</span>
+        </div>
+        <div class="password-container">
+            <input type="password" name="confirm_password" id="confirmPasswordField" placeholder="Confirmar contraseña" required>
+            <span class="password-toggle" id="confirmPasswordToggle" onclick="togglePasswordVisibility('confirmPasswordField', 'confirmPasswordToggle')">👁️‍🗨️</span>
+        </div>
         <button type="submit">Guardar</button>
     </form>
     {% if messages %}

@@ -6,6 +6,20 @@
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'login.css' %}" >
+<script>
+    function togglePasswordVisibility(inputId, toggleId) {
+        const passwordInput = document.getElementById(inputId);
+        const toggleIcon = document.getElementById(toggleId);
+        
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            toggleIcon.innerHTML = "👁️";
+        } else {
+            passwordInput.type = "password";
+            toggleIcon.innerHTML = "👁️‍🗨️";
+        }
+    }
+</script>
 <main>
     <form method="POST" action="{% url 'login' %}">
         {% csrf_token %}

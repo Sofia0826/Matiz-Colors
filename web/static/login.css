@@ -75,3 +75,25 @@ button:hover {
     background-color: #f8d7da;
     color: #ff449b;
 }
+
+/* Estilos para el contenedor de la contraseña */
+.password-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.password-container input {
+    width: 100%;
+    padding-right: 40px; /* Espacio para el ícono */
+}
+
+/* Estilos para el botón de toggle */
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    user-select: none;
+}

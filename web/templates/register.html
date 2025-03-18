@@ -5,10 +5,56 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'registre.css' %}">
+<script>
+    // Función para alternar la visibilidad de la contraseña
+    function togglePasswordVisibility(inputId, toggleId) {
+        const passwordInput = document.getElementById(inputId);
+        const toggleIcon = document.getElementById(toggleId);
+        
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            toggleIcon.innerHTML = "👁️";
+        } else {
+            passwordInput.type = "password";
+            toggleIcon.innerHTML = "👁️‍🗨️";
+        }
+    }
 
+    // Función que se ejecuta al cargar la página
+    window.onload = function() {
+        // Si hay errores, preservamos el valor del usuario y email
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('error')) {
+            // Restauramos los valores de username y email si estaban en localStorage
+            if (localStorage.getItem('savedUsername')) {
+                document.getElementById('username').value = localStorage.getItem('savedUsername');
+            }
+            if (localStorage.getItem('savedEmail')) {
+                document.getElementById('email').value = localStorage.getItem('savedEmail');
+            }
+            // Limpiamos localStorage después de usarlo
+            localStorage.removeItem('savedUsername');
+            localStorage.removeItem('savedEmail');
+        }
+    }
+
+    // Función para guardar los datos del formulario antes de enviarlo
+    function saveFormData() {
+        const usernameInput = document.getElementById('username');
+        const emailInput = document.getElementById('email');
+        
+        if (usernameInput && usernameInput.value) {
+            localStorage.setItem('savedUsername', usernameInput.value);
+        }
+        if (emailInput && emailInput.value) {
+            localStorage.setItem('savedEmail', emailInput.value);
+        }
+        return true;
+    }
+</script>
 
 <main>
-    <form method="POST" action="{% url 'register' %}">
+    <form method="POST" action="{% url 'register' %}" onsubmit="return saveFormData()">
         {% csrf_token %}
         <div>
             <h2>Registro</h2>
@@ -22,10 +68,19 @@
                 </div>
             {% endif %}
 
-            <input type="text" name="username" placeholder="Nombre del Usuario" required> 
-            <input type="email" name="email" placeholder="Correo Electrónico" required>
-            <input type="password" name="password" placeholder="Contraseña" required>
-            <input type="password" name="confirm_password" placeholder="Confirmar Contraseña" required>
+            <input type="text" name="username" id="username" placeholder="Nombre del Usuario" required> 
+            <input type="email" name="email" id="email" placeholder="Correo Electrónico" required>
+            
+            <div class="password-container">
+                <input type="password" name="password" id="passwordField" placeholder="Contraseña" required>
+                <span class="password-toggle" id="passwordToggle" onclick="togglePasswordVisibility('passwordField', 'passwordToggle')">👁️‍🗨️</span>
+            </div>
+            
+            <div class="password-container">
+                <input type="password" name="confirm_password" id="confirmPasswordField" placeholder="Confirmar Contraseña" required>
+                <span class="password-toggle" id="confirmPasswordToggle" onclick="togglePasswordVisibility('confirmPasswordField', 'confirmPasswordToggle')">👁️‍🗨️</span>
+            </div>
+            
             <button type="submit">Registrarse</button>
             <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a></p>
         </div>
