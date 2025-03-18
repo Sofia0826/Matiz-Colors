@@ -48,6 +48,7 @@
                             <li><a href="{% url 'login' %}">Inicio / Registro</a></li>
                         {% else %}
                             <li><a href="{% url 'perfil' %}">Perfil de Usuario</a></li>
+                            <li><a href="{% url 'historial_compras' %}">Historial de Compras</a></li>
                             <form method="post" action="{% url 'logout' %}">
                                 {% csrf_token %}
                                 <li><button type="submit">Cerrar Sesión</button></li>

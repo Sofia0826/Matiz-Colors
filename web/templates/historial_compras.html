@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Historial de Compras{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'historial.css' %}">
+
+<div class="container mt-4">
+    <div class="historial-header">
+        <h2>Historial de Compras</h2>
+        
+        <!-- Agregar filtro por fechas si lo deseas -->
+        <form method="get" class="filtro-fechas">
+            <div class="form-group">
+                <label for="fecha_inicio">Desde:</label>
+                <input type="date" id="fecha_inicio" name="fecha_inicio" value="{{ fecha_inicio }}">
+            </div>
+            <div class="form-group">
+                <label for="fecha_fin">Hasta:</label>
+                <input type="date" id="fecha_fin" name="fecha_fin" value="{{ fecha_fin }}">
+            </div>
+            <button type="submit" class="btn btn-sm btn-primary">Filtrar</button>
+        </form>
+    </div>
+
+    {% if ordenes %}
+        <div class="table-container">
+            <table class="ordenes-table">
+                <thead>
+                    <tr>
+                        <th>Número de Orden</th>
+                        <th>Fecha</th>
+                        <th>Método de Pago</th>
+                        <th>Estado del Pago</th>
+                        <th>Productos</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for orden in ordenes %}
+                    <tr>
+                        <td>#{{ orden.id }}</td>
+                        <td>{{ orden.fecha_creacion|date:"d/m/Y H:i" }}</td>
+                        <td>{{ orden.get_metodo_pago_display|default:orden.metodo_pago }}</td>
+                        <td>
+                            <span class="estado-pago {% if orden.comprobante %}pagado{% else %}pendiente{% endif %}">
+                                {% if orden.comprobante %}Pagado{% else %}Pendiente{% endif %}
+                            </span>
+                        </td>
+                        <td>
+                            <ul>
+                                {% for item in orden.items.all %}
+                                    <li>{{ item.cantidad }}x {{ item.producto.nombre }} - ${{ item.calcular_subtotal|floatformat:2 }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>${{ orden.total|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="no-ordenes">
+            <p>No tienes compras registradas aún.</p>
+            <a href="{% url 'home' %}" class="btn btn-primary">Ir a comprar</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

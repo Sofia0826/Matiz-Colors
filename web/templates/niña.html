@@ -9,6 +9,15 @@
 </script>
 <link rel="stylesheet" href="{% static 'galeria.css' %}">
 
+<!-- Barra de búsqueda -->
+<form action="{% url 'buscar_productos' %}" method="GET" class="search-container">
+    <input type="text" name="q" id="search-input" placeholder="Buscar productos..." class="search-input">
+    <input type="hidden" name="linea" value="niña"> 
+    <button type="submit" class="search-button">
+        <i class="fas fa-search"></i> Buscar
+    </button>   
+</form>
+
 
 <!-- Productos agrupados por categoría -->
 {% if productos_por_categoria %}
@@ -16,18 +25,20 @@
         <h2 class="subcategoria-titulo">{{ categoria_nombre }}</h2>
         <div class="grid productos-container">
             {% for producto in productos_lista %}
-                <div class="items" 
+                <div class="items producto-item" 
                      data-id="{{ producto.id }}" 
                      data-title="{{ producto.nombre }}" 
                      data-price="{{ producto.precio }}" 
-                     data-img="{{ producto.imagen.url }}"> 
+                     data-img="{{ producto.imagen.url }}"
+                     data-descripcion="{{ producto.descripcion }}"
+                     data-categoria="{{ categoria_nombre }}">
 
                     <img src="{{ producto.imagen.url }}" class="imagen-detalle" alt="{{ producto.nombre }}">
                     <div class="info">
                         <h3>{{ producto.nombre }}</h3>
                         <p>{{ producto.descripcion }}</p>
                         <div class="precio">
-                                <p>${{ producto.precio }}</p>
+                            <p>${{ producto.precio }}</p>
                         </div>
                         <button class="ver-detalles">Ver Detalles</button>
                     </div>
@@ -39,7 +50,12 @@
     <p>No hay productos disponibles en esta categoría.</p>
 {% endif %}
 
-<!-- Modal de Detalles (mantener código existente) -->
+<!-- Mensaje de no resultados -->
+<div id="no-results" class="no-results-message" style="display:none;">
+    <p>No se encontraron productos que coincidan con tu búsqueda.</p>
+</div>
+
+<!-- Modal de Detalles -->
 <div class="modal-overlay" id="modal-overlay"></div>
 <div class="modal" id="detalle-modal">
     <div class="modal-content">
@@ -75,7 +91,7 @@
                 <!-- FORMULARIO DENTRO DE LA MODAL -->
                 <div id="modal-auth-content">
                     {% if request.user.is_authenticated %}
-                    <form method="POST" action="{% url 'niña' %}" id="modal-form">
+                    <form method="POST" action="{% url request.resolver_match.url_name %}" id="modal-form">
                         {% csrf_token %}
                         <input type="hidden" name="producto_id" id="modal-producto-id">
                         <input type="hidden" name="talla" id="modal-talla-seleccionada" value="M">
@@ -97,10 +113,4 @@
 
 {% block scripts %}
 <script src="{% static 'js/index.js' %}" defer></script>
-<script>
-    // Actualizar el campo de talla cuando cambia la selección
-    document.getElementById('tallas').addEventListener('change', function() {
-        document.getElementById('modal-talla-seleccionada').value = this.value;
-    });
-</script>
 {% endblock scripts %}

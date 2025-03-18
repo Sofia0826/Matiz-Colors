@@ -19,6 +19,9 @@ from django.core.mail import EmailMessage
 from django.conf import settings
 import os
 from decimal import Decimal
+from datetime import datetime
+from django.db.models import Q
+
 
 
 # Configurar logging
@@ -51,7 +54,6 @@ def mujer(request):
     # Si se selecciona una categoría específica
     if categoria_id and categoria_id.isdigit():
         producto_lista = Producto.objects.filter(linea="mujer", visible=True, categoria_id=int(categoria_id))
-      
     else:
         producto_lista = Producto.objects.filter(linea="mujer", visible=True)
     
@@ -62,52 +64,56 @@ def mujer(request):
             productos_por_categoria[producto.categoria.nombre] = []
         productos_por_categoria[producto.categoria.nombre].append(producto)
 
-    # Manejo del formulario POST para agregar al carrito (mantener código existente)
+    # Manejo del formulario POST para agregar al carrito
     if request.method == "POST" and 'producto_id' in request.POST:
         producto_id = request.POST.get('producto_id', "").strip()
         talla = request.POST.get('talla', 'M')
-
-        if not producto_id.isdigit():
-            messages.error(request, "ID del producto inválido.")
+        color = request.POST.get('color', 'Rosado')  # Nuevo campo para color
+        
+        # Validación simple
+        if not producto_id or not producto_id.isdigit():
+            messages.error(request, "ID del producto inválido o no proporcionado.")
             return redirect('mujer')
 
         try:
-            producto = Producto.objects.get(id=int(producto_id), linea="mujer", visible=True)
-
-            if not request.user.is_authenticated:
-                if not request.session.session_key:
-                    request.session.create()
-                sesion_id = request.session.session_key
-
+            # Obtener el producto
+            producto = get_object_or_404(Producto, id=int(producto_id), linea="mujer", visible=True)
+            
+            # Añadir al carrito según si el usuario está autenticado o no
+            if request.user.is_authenticated:
+                # Usuario autenticado - usar su ID
                 carrito_item, created = CarritoItem.objects.get_or_create(
                     producto=producto,
-                    sesion_id=sesion_id,
-                    usuario=None,
+                    usuario=request.user,
                     talla=talla,
                     defaults={'cantidad': 1}
                 )
             else:
+                # Usuario anónimo - usar ID de sesión
+                if not request.session.session_key:
+                    request.session.create()
+                    
                 carrito_item, created = CarritoItem.objects.get_or_create(
                     producto=producto,
-                    usuario=request.user,
-                    sesion_id=None,
+                    sesion_id=request.session.session_key,
                     talla=talla,
                     defaults={'cantidad': 1}
                 )
-
+            
+            # Si el item ya existía, aumentar cantidad
             if not created:
                 carrito_item.cantidad += 1
                 carrito_item.save()
-
-            messages.success(request, f"{producto.nombre} añadido al carrito")
-            return redirect('mujer')
-
+                
+            messages.success(request, f"{producto.nombre} añadido al carrito.")
+            return redirect('mujer')  # Redirigir al carrito
+            
         except Producto.DoesNotExist:
-            messages.error(request, "Producto no encontrado")
-            return redirect('mujer')
-
+            messages.error(request, "El producto no existe o no está disponible.")
+        except Exception as e:
+            messages.error(request, f"Error al agregar al carrito: {str(e)}")
+    
     return render(request, 'mujer.html', {
-        'productos': producto_lista,
         'productos_por_categoria': productos_por_categoria,
         'categoria_seleccionada': int(categoria_id) if categoria_id and categoria_id.isdigit() else None
     })
@@ -118,7 +124,6 @@ def niña(request):
     # Si se selecciona una categoría específica
     if categoria_id and categoria_id.isdigit():
         producto_lista = Producto.objects.filter(linea="niña", visible=True, categoria_id=int(categoria_id))
-      
     else:
         producto_lista = Producto.objects.filter(linea="niña", visible=True)
     
@@ -129,52 +134,56 @@ def niña(request):
             productos_por_categoria[producto.categoria.nombre] = []
         productos_por_categoria[producto.categoria.nombre].append(producto)
 
-    # Manejo del formulario POST para agregar al carrito (mantener código existente)
+    # Manejo del formulario POST para agregar al carrito
     if request.method == "POST" and 'producto_id' in request.POST:
         producto_id = request.POST.get('producto_id', "").strip()
         talla = request.POST.get('talla', 'M')
-
-        if not producto_id.isdigit():
-            messages.error(request, "ID del producto inválido.")
-            return redirect('mujer')
+        color = request.POST.get('color', 'Rosado')  # Nuevo campo para color
+        
+        # Validación simple
+        if not producto_id or not producto_id.isdigit():
+            messages.error(request, "ID del producto inválido o no proporcionado.")
+            return redirect('niña')
 
         try:
-            producto = Producto.objects.get(id=int(producto_id), linea="niña", visible=True)
-
-            if not request.user.is_authenticated:
-                if not request.session.session_key:
-                    request.session.create()
-                sesion_id = request.session.session_key
-
+            # Obtener el producto
+            producto = get_object_or_404(Producto, id=int(producto_id), linea="niña", visible=True)
+            
+            # Añadir al carrito según si el usuario está autenticado o no
+            if request.user.is_authenticated:
+                # Usuario autenticado - usar su ID
                 carrito_item, created = CarritoItem.objects.get_or_create(
                     producto=producto,
-                    sesion_id=sesion_id,
-                    usuario=None,
+                    usuario=request.user,
                     talla=talla,
                     defaults={'cantidad': 1}
                 )
             else:
+                # Usuario anónimo - usar ID de sesión
+                if not request.session.session_key:
+                    request.session.create()
+                    
                 carrito_item, created = CarritoItem.objects.get_or_create(
                     producto=producto,
-                    usuario=request.user,
-                    sesion_id=None,
+                    sesion_id=request.session.session_key,
                     talla=talla,
                     defaults={'cantidad': 1}
                 )
-
+            
+            # Si el item ya existía, aumentar cantidad
             if not created:
                 carrito_item.cantidad += 1
                 carrito_item.save()
-
-            messages.success(request, f"{producto.nombre} añadido al carrito")
-            return redirect('niña')
-
+                
+            messages.success(request, f"{producto.nombre} añadido al carrito.")
+            return redirect('niña')  
+            
         except Producto.DoesNotExist:
-            messages.error(request, "Producto no encontrado")
-            return redirect('niña')
-
+            messages.error(request, "El producto no existe o no está disponible.")
+        except Exception as e:
+            messages.error(request, f"Error al agregar al carrito: {str(e)}")
+    
     return render(request, 'niña.html', {
-        'productos': producto_lista,
         'productos_por_categoria': productos_por_categoria,
         'categoria_seleccionada': int(categoria_id) if categoria_id and categoria_id.isdigit() else None
     })
@@ -359,8 +368,6 @@ def enviar_correo_confirmacion(orden):
         logger.error(f"Error al enviar el correo de confirmación: {e}")
 
 
-
-
 def ver_carrito(request):
     carrito_items = []
     total = Decimal("0.00")
@@ -378,8 +385,6 @@ def ver_carrito(request):
         'carrito_items': carrito_items,
         'total': total
     })
-
-
 
 # Actualizar cantidad en el carrito
 def actualizar_carrito(request, item_id):
@@ -420,10 +425,19 @@ def eliminar_item(request, item_id):
         messages.error(request, "Item no encontrado")
         
     return redirect('ver_carrito')
-
 # Envío de correo de confirmación al cliente
+import os
+import logging
+from django.core.mail import EmailMessage
+from django.conf import settings
+from .models import OrdenItem
+
+logger = logging.getLogger(__name__)  # Definir el logger
+
 def enviar_correo_empresa(orden):
     asunto = f"Nuevo Pedido #{orden.id} - Notificación para la empresa"
+
+    # Construir el mensaje manteniendo el formato original
     mensaje = f"""
 📢 **Nuevo Pedido Recibido** 📢
 
@@ -442,21 +456,25 @@ def enviar_correo_empresa(orden):
 📦 **Productos Comprados**:
 """
 
+    # Obtener los productos comprados
     items = OrdenItem.objects.filter(orden=orden)
     for item in items:
-        precio_unitario = item.precio
-        mensaje += f"\n- {item.cantidad} x {item.producto.nombre} (${precio_unitario:.2f} c/u)"
+        mensaje += f"\n- {item.cantidad} x {item.producto.nombre} (${item.precio:.2f} c/u)"
 
     mensaje += "\n\nPor favor, revisa el sistema para gestionar el pedido."
 
-    email = EmailMessage(
-    asunto,
-    mensaje,
-    'mariasofiapimentelplaza@gmail.com', 
-    [orden.email]  
-    )
-    email.send(fail_silently=False)  
+    # Lista de destinatarios
+    destinatarios = ['mariasofiapimentelplaza@gmail.com']  # Correo de la empresa
+    if orden.email:  # Asegurar que el correo del cliente no sea None
+        destinatarios.append(orden.email)
 
+    # Configurar el correo
+    email = EmailMessage(
+        asunto,
+        mensaje,
+        'mariasofiapimentelplaza@gmail.com',  # Remitente
+        destinatarios  # Lista de destinatarios
+    )
 
     # Adjuntar el comprobante si existe
     if orden.comprobante:
@@ -465,7 +483,8 @@ def enviar_correo_empresa(orden):
             email.attach_file(comprobante_path)
 
     try:
-        email.send()
+        email.send(fail_silently=False)
+        logger.info(f"Correo enviado correctamente para la orden {orden.id}")
     except Exception as e:
         logger.error(f"Error al enviar el correo a la empresa: {e}")
 
@@ -581,3 +600,77 @@ def confirmacion(request, orden_id):
     except Orden.DoesNotExist:
         messages.error(request, "Orden no encontrada.")
         return redirect('home')
+
+@login_required
+def historial_compras(request):
+    # Obtener los parámetros de fecha desde la solicitud GET
+    fecha_inicio = request.GET.get('fecha_inicio')
+    fecha_fin = request.GET.get('fecha_fin')
+    
+    # Obtener todas las órdenes del usuario con sus items relacionados
+    ordenes = Orden.objects.filter(usuario=request.user).prefetch_related('items').order_by('-fecha_creacion')
+    
+    # Filtrar por fecha si se proporcionan los valores
+    if fecha_inicio:
+        try:
+            fecha_inicio = datetime.strptime(fecha_inicio, '%Y-%m-%d')
+            ordenes = ordenes.filter(fecha_creacion__date__gte=fecha_inicio)
+        except ValueError:
+            pass
+    
+    if fecha_fin:
+        try:
+            fecha_fin = datetime.strptime(fecha_fin, '%Y-%m-%d')
+            ordenes = ordenes.filter(fecha_creacion__date__lte=fecha_fin)
+        except ValueError:
+            pass
+    
+    return render(request, 'historial_compras.html', {
+        'ordenes': ordenes,
+        'fecha_inicio': fecha_inicio.strftime('%Y-%m-%d') if isinstance(fecha_inicio, datetime) else '',
+        'fecha_fin': fecha_fin.strftime('%Y-%m-%d') if isinstance(fecha_fin, datetime) else ''
+    })
+
+from django.http import HttpResponse
+
+
+def buscar_productos(request):
+    query = request.GET.get("q", "").strip().lower()
+    linea = request.GET.get("linea", "").strip().lower()
+
+    # 📌 Si la línea sigue vacía, intentamos obtenerla desde la URL anterior
+    if not linea:
+        referer = request.META.get("HTTP_REFERER", "")
+        print(f"🔗 Referer: {referer}")  # ← Verifica qué URL se está enviando
+        
+        if "niña" in referer:
+            linea = "niña"
+        elif "mujer" in referer:
+            linea = "mujer"
+    
+    print(f"🛠 Línea final: {linea}")  # ← Debugging para ver si se determina bien
+
+    if not linea:
+        return HttpResponse("Error: No se puede determinar la línea.", status=400)
+
+    productos_filtrados = Producto.objects.filter(visible=True, linea=linea)
+    
+    if query:
+        productos_filtrados = productos_filtrados.filter(
+            Q(nombre__icontains=query) |
+            Q(descripcion__icontains=query) |
+            Q(categoria__nombre__icontains=query)
+        )
+
+    productos_por_categoria = {}
+    for producto in productos_filtrados:
+        categoria_nombre = producto.categoria.nombre
+        if categoria_nombre not in productos_por_categoria:
+            productos_por_categoria[categoria_nombre] = []
+        productos_por_categoria[categoria_nombre].append(producto)
+
+    return render(request, "busqueda.html", {
+        "productos_por_categoria": productos_por_categoria,
+        "query": query,
+        "linea": linea
+    })

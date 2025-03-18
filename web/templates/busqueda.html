@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Resultados de Búsqueda{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'galeria.css' %}">
+
+<!-- Barra de búsqueda -->
+<form action="{% url 'buscar_productos' %}" method="GET" class="search-container">
+    <input type="text" name="q" id="search-input" placeholder="Buscar productos..." class="search-input" value="{{ query }}">
+    <button type="submit" class="search-button">
+        <i class="fas fa-search"></i> Buscar
+    </button>   
+</form>
+
+<!-- Resultados de la búsqueda -->
+{% if productos_por_categoria %}
+    <h2></h2>
+    {% for categoria_nombre, productos_lista in productos_por_categoria.items %}
+        <h3 class="subcategoria-titulo">{{ categoria_nombre }}</h3>
+        <div class="grid productos-container">
+            {% for producto in productos_lista %}
+                <div class="items producto-item" data-id="{{ producto.id }}">
+                    <img src="{{ producto.imagen.url }}" class="imagen-detalle" alt="{{ producto.nombre }}">
+                    <div class="info">
+                        <h3>{{ producto.nombre }}</h3>
+                        <p>{{ producto.descripcion }}</p>
+                        <div class="precio">
+                            <p>${{ producto.precio }}</p>
+                        </div>
+                        <button class="ver-detalles">Ver Detalles</button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No se encontraron productos en esta categoría.</p>
+{% endif %}
+{% endblock %}

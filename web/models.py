@@ -2,8 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+from django.db import models
+
 class Categoria(models.Model):
-    nombre = models.CharField(max_length=100)
+    nombre = models.CharField(max_length=255)
 
     def __str__(self):
         return self.nombre
@@ -22,9 +24,8 @@ class Producto(models.Model):
     linea = models.CharField(max_length=10, choices=LINEA_CHOICES, default='mujer')  
     visible = models.BooleanField(default=True)  
 
-
     def __str__(self):
-        return self.nombre
+        return f"{self.nombre} ({self.linea})"
 
 class Perfil(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -79,6 +80,8 @@ class Orden(models.Model):
 
     def __str__(self): 
         return f"Orden #{self.id} - {self.nombre}"
+    
+    
 
 class OrdenItem(models.Model):
     orden = models.ForeignKey(Orden, on_delete=models.CASCADE, related_name='items')

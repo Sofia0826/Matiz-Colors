@@ -13,7 +13,7 @@ html {
 body {
   height: 100%;
   font-family: 'Arial', sans-serif;
-  background-color: rgb(254, 226, 231);
+  background-color: rgb(252, 243, 245);
   color: #333;
   line-height: 1.5;
   display: flex;
@@ -175,7 +175,7 @@ img, .iconos_2 i {
   z-index: 100;
   border-radius: 5px;
   padding: 10px;
-  width: 150px;
+  width: 200px;
 }
 
 .user-menu ul {
@@ -188,7 +188,7 @@ img, .iconos_2 i {
 
 .user-menu ul li {
   padding: 10px;
-  text-align: left;
+  text-align: center;
 }
 
 .user-menu ul li form {

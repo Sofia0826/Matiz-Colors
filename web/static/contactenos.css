@@ -1,91 +1,184 @@
 .contacto-container {
-    max-width: 600px;
-    margin: 80px auto 20px;
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 650px;
+    margin: 80px auto 40px;
+    padding: 40px 50px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(138, 90, 137, 0.15);
     text-align: center;
+    border: 1px solid #d4b6d3;
+    transition: transform 0.4s ease;
+}
 
+.contacto-container:hover {
+    transform: translateY(-3px);
 }
 
 .contacto-container h2 {
-    font-size: 2.2rem;
-    color: #ff0077;
-    margin-bottom: 10px;
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: #8a5a89;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.contacto-container h2:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background-color: #d4b6d3;
 }
 
 .contacto-container p {
-    font-size: 1.4rem;
-    color: #333;
-    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    color: #6e6e6e;
+    margin-bottom: 30px;
+    line-height: 1.6;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 16px;
 }
 
-label {
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: #333;
+.contacto-container label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #444444;
     text-align: left;
+    letter-spacing: 0.5px;
+    margin-bottom: -8px;
 }
 
-input, textarea {
+.contacto-container input,
+.contacto-container textarea {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1.4rem;
+    padding: 14px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    transition: all 0.4s ease;
+    background-color: #fafafa;
 }
 
-textarea {
+.contacto-container input:focus,
+.contacto-container textarea:focus {
+    outline: none;
+    border-color: #d4b6d3;
+    box-shadow: 0 0 0 2px rgba(212, 182, 211, 0.25);
+}
+
+.contacto-container textarea {
     resize: none;
+    min-height: 140px;
 }
 
-button {
-    padding: 10px;
-    background-color: #ff0077;
+.contacto-container button {
+    padding: 14px;
+    margin-top: 10px;
+    background-color: #8a5a89;
     color: white;
     border: none;
-    font-size: 1.6rem;
-    font-weight: bold;
-    border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.4s ease;
+    text-transform: uppercase;
 }
 
-button:hover {
-    background-color: #d10063;
+.contacto-container button:hover {
+    background-color: #6a4568;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(138, 90, 137, 0.2);
 }
 
 /* Estilos para mensajes de éxito o error */
 .alertas {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .alert {
-    padding: 12px;
-    border-radius: 5px;
-    font-size: 1.4rem;
-    font-weight: bold;
+    padding: 14px;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .alert.success {
-    background-color: rgb(164, 91, 170);
+    background-color: #8a5a89;
     color: white;
+    border-left: 4px solid #6a4568;
 }
 
 .alert.error {
-    background-color: #dc3545;
+    background-color: #d05d7a;
     color: white;
+    border-left: 4px solid #a94057;
+}
+
+/* Efecto de enfoque para el formulario completo */
+.contacto-container:focus-within {
+    box-shadow: 0 12px 28px rgba(138, 90, 137, 0.2);
+}
+
+@media (max-width: 768px) {
+    .contacto-container {
+        padding: 30px;
+        margin-top: 60px;
+    }
+    
+    .contacto-container h2 {
+        font-size: 1.8rem;
+    }
+    
+    .contacto-container p {
+        font-size: 1rem;
+    }
 }
 
 @media (max-width: 480px) {
-    .contacto-container{
+    .contacto-container {
+        padding: 25px 20px;
         margin-top: 30%;
+    }
+    
+    .contacto-container h2 {
+        font-size: 1.6rem;
+    }
+    
+    .contacto-container p {
+        font-size: 0.9rem;
+    }
+    
+    .contacto-container input,
+    .contacto-container textarea,
+    .contacto-container button {
+        padding: 12px;
+    }
+    
+    .alert {
+        padding: 12px;
+        font-size: 0.9rem;
     }
 }

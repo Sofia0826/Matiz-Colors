@@ -8,6 +8,7 @@ from web.views import perfil
 from django.contrib.auth.views import LogoutView
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),  
@@ -29,6 +30,8 @@ urlpatterns = [
     path("carrito/eliminar/<int:item_id>/", views.eliminar_item, name="eliminar_item"),
     path('pasarela/', views.pasarela, name='pasarela'),
     path('confirmacion/<int:orden_id>/', views.confirmacion, name='confirmacion'),
+    path('historial-compras/', views.historial_compras, name='historial_compras'),
+    path("buscar/", views.buscar_productos, name="buscar_productos"),
 ] 
 
 if settings.DEBUG:

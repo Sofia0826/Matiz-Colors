@@ -9,24 +9,34 @@
 </script>
 <link rel="stylesheet" href="{% static 'galeria.css' %}">
 
+<!-- Barra de búsqueda -->
+<div class="search-container">
+    <input type="text" id="search-input" placeholder="Buscar productos..." class="search-input">
+    <button id="search-button" class="search-button">
+        <i class="fas fa-search"></i> Buscar
+    </button>   
+</div>
+
 <!-- Productos agrupados por categoría -->
 {% if productos_por_categoria %}
     {% for categoria_nombre, productos_lista in productos_por_categoria.items %}
         <h2 class="subcategoria-titulo">{{ categoria_nombre }}</h2>
         <div class="grid productos-container">
             {% for producto in productos_lista %}
-                <div class="items" 
+                <div class="items producto-item" 
                      data-id="{{ producto.id }}" 
                      data-title="{{ producto.nombre }}" 
                      data-price="{{ producto.precio }}" 
-                     data-img="{{ producto.imagen.url }}"> 
+                     data-img="{{ producto.imagen.url }}"
+                     data-descripcion="{{ producto.descripcion }}"
+                     data-categoria="{{ categoria_nombre }}">
 
                     <img src="{{ producto.imagen.url }}" class="imagen-detalle" alt="{{ producto.nombre }}">
                     <div class="info">
                         <h3>{{ producto.nombre }}</h3>
                         <p>{{ producto.descripcion }}</p>
                         <div class="precio">
-                                <p>${{ producto.precio }}</p>
+                            <p>${{ producto.precio }}</p>
                         </div>
                         <button class="ver-detalles">Ver Detalles</button>
                     </div>
@@ -38,7 +48,12 @@
     <p>No hay productos disponibles en esta categoría.</p>
 {% endif %}
 
-<!-- Modal de Detalles (mantener código existente) -->
+<!-- Mensaje de no resultados -->
+<div id="no-results" class="no-results-message" style="display:none;">
+    <p>No se encontraron productos que coincidan con tu búsqueda.</p>
+</div>
+
+<!-- Modal de Detalles con formulario mejorado -->
 <div class="modal-overlay" id="modal-overlay"></div>
 <div class="modal" id="detalle-modal">
     <div class="modal-content">
@@ -71,13 +86,14 @@
                     </div>
                 </div>
 
-                <!-- FORMULARIO DENTRO DE LA MODAL -->
+                <!-- FORMULARIO DENTRO DE LA MODAL - MEJORADO -->
                 <div id="modal-auth-content">
                     {% if request.user.is_authenticated %}
                     <form method="POST" action="{% url 'mujer' %}" id="modal-form">
                         {% csrf_token %}
                         <input type="hidden" name="producto_id" id="modal-producto-id">
                         <input type="hidden" name="talla" id="modal-talla-seleccionada" value="M">
+                        <input type="hidden" name="color" id="modal-color-seleccionado" value="Rosado">
                         <button type="submit" class="btn w-100 btn-agregar">
                             Agregar al carrito
                         </button>
