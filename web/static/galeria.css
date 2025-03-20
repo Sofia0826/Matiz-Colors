@@ -110,7 +110,7 @@
   transition: all 0.4s ease;
   overflow: hidden;
   position: relative;
-  height: 520px; 
+  height: 580px; 
   display: flex;
   flex-direction: column;
 }

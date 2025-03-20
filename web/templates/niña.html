@@ -29,11 +29,11 @@
                      data-id="{{ producto.id }}" 
                      data-title="{{ producto.nombre }}" 
                      data-price="{{ producto.precio }}" 
-                     data-img="{{ producto.imagen.url }}"
+                     data-img="{% if producto.imagen %}{{ producto.imagen.url }}{% else %}{% static 'default-image.jpg' %}{% endif %}"
                      data-descripcion="{{ producto.descripcion }}"
                      data-categoria="{{ categoria_nombre }}">
 
-                    <img src="{{ producto.imagen.url }}" class="imagen-detalle" alt="{{ producto.nombre }}">
+                     <img src="{% if producto.imagen %}{{ producto.imagen.url }}{% else %}{% static 'default-image.jpg' %}{% endif %}" class="imagen-detalle" alt="{{ producto.nombre }}">
                     <div class="info">
                         <h3>{{ producto.nombre }}</h3>
                         <p>{{ producto.descripcion }}</p>

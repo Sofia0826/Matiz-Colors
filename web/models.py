@@ -19,7 +19,7 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=255)
     descripcion = models.TextField()
     precio = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  
-    imagen = models.ImageField(upload_to='productos/', blank=True, null=True)
+    imagen = models.ImageField(upload_to='productos/', default='productos/default.jpg', blank=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     linea = models.CharField(max_length=10, choices=LINEA_CHOICES, default='mujer')  
     visible = models.BooleanField(default=True)  
