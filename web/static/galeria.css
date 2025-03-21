@@ -520,7 +520,7 @@ select:focus {
   }
   
   .items {
-      height: 450px;
+      height: 500px;
   }
 }
 
@@ -532,6 +532,6 @@ select:focus {
   }
   
   .items {
-      height: 480px;
+      height: 600px;
   }
 }
